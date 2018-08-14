@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 指定对于绑定的Mapper接口 -->
+<mapper namespace = "com.mybatis.mapper.StaffMapper">
+
+
+	
+	<!-- 4、根据姓名、性别、年龄添加至少15个员工（员工需要有男有女、年龄分布18-60岁）(4分)-->
+	<insert id="insertStaff">
+		INSERT INTO db_staff VALUES( #{id}, #{name}, #{sex}, #{age}, #{departmentID} )
+	</insert>
+	
+	<!-- 5、根据员工ID修改名字、性别、年龄 (3分) -->
+	<update id="updateStaff">
+		UPDATE db_staff SET name=#{name}, sex=#{sex}, age=#{age} WHERE id=#{id}
+	</update>
+	
+	<!--  6、根据员工ID、部门名称修改员工的部门 (3分) -->
+	<update id="updateStaffbyDepaerment">
+		UPDATE db_staff sta db_department dp SET sta.departmentID=#{id}  WHERE sta.id=#{id}  AND dp.departmentName=#{departmentName}
+	</update>
+	
+	<!--7、根据员工ID删除员工 (3分)-->
+	<delete id="deleteStaff">
+		DELETE FROM db_staff WHERE id = #{id}
+	</delete>
+	
+	<!-- 8、根据指定年龄段查询统计该年龄段的员工人数 (4分) -->
+	<select id="listStaffByAge" resultMap="staffBean">
+		SELECT d.id
+		did,d.department_name departmentName,d.remarks,s.id sid,s.`name`
+		staffName,s.sex staffSex,s.age staffAge
+		from db_department d LEFT JOIN
+		db_staff s ON
+		d.id=s.departmentID
+		WHERE s.age>#{age}
+		
+	</select>
+	
+	<!-- 查询语句  -->
+	<select id="listStaff" resultType="com.mybatis.entity.DBStaff">
+		SELECT s.name, s.sex, s.age FROM db_staff s
+	</select>
+
+</mapper>
