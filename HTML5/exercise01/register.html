@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>星巴克咖啡</title>
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <!--[if IE]>
+    <script src="js/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrap">
+    <header class="top-header">
+        <img class="starbucks-logo" src="images/logo.png" alt="星巴克咖啡">
+        <nav class="top-menu">
+            <ul>
+                <li><a href="index.html" title="多俊睿主页">主页</a></li>
+                <li><a href="#" title="校园生活">校园生活</a></li>
+                <li><a href="#" title="最爱美食">最爱美食</a></li>
+                <li><a href="#" title="一路旅行">一路旅行</a></li>
+                <li class="selected"><a href="register.html" title="用户注册">用户注册</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="form">
+        <h3>个人网站用户注册页</h3>
+        <form action="success.html" method="post">
+
+            <div class="row">
+                <div class="cell"><label for="beans">您所在的学校</label></div>
+                <div class="cell">
+                    <input type="text" id="beans" list="beans_list">
+                    <datalist id="beans_list">
+                        <option value="桂林电子科技大学">
+                        <option value="桂电信息科技学院">
+                        <option value="桂林航天工业学院">
+                    </datalist>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">性别</div>
+                <div class="cell">
+                    <input type="radio" id="type1" name="type" value="1" checked>
+                    <label for="type1">男</label><br>
+                    <input type="radio" id="type2" name="type" value="2">
+                    <label for="type2">女</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell"><label for="bags">年龄：</label></div>
+                <div class="cell">
+                    <input type="number" id="bags" name="bags" min="1" max="150">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell"><label for="date">出生年月：</label></div>
+                <div class="cell">
+                    <input type="date" id="date" name="date">
+                </div>
+            </div>
+
+           
+
+            <div class="row">
+                <div class="cell"><label for="address">详细地址：</label></div>
+                <div class="cell">
+                    <input type="text" id="address" name="address" placeholder="请输入详细通讯地址" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell"><label for="zip">邮编：</label></div>
+                <div class="cell">
+                    <input type="text" id="zip" name="zip" placeholder="请输入邮编" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell"><label for="phone">联系电话：</label></div>
+                <div class="cell">
+                    <input type="tel" id="phone" name="phone" placeholder="请输入本人手机号" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell"><label for="comments">留言：</label></div>
+                <div class="cell">
+                    <textarea id="comments" name="comments" maxlength="50"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"><input type="submit" value="立即注册"></div>
+            </div>
+
+        </form>
+    </main>
+</div>
+<footer class="page-footer">
+     @2017 Designed By Duojunrui. 版权所有
+</footer>
+</body>
+</html>
