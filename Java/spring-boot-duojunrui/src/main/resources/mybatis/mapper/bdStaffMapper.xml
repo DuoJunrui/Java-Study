@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stu.djr.staff.mapper.IDbStaffMapper">
+	<resultMap id="staffBean" type="DbStaff" autoMapping="true">
+		<id column="sid" property="id" />
+		<result column="staffName" property="name" />
+		<result column="staffSex" property="sex" />
+		<result column="staffAge" property="age" javaType="int" />
+		<!-- 多对一的关系 -->
+		<!-- property: 指的是属性名称, javaType：指的是属性的类型 -->
+		<association property="department" javaType="DbDepartment">
+			<id column="did" property="id" />
+			<result column="departmentName" property="department_name" />
+			<result column="remarks" property="remarks" />
+		</association>
+	</resultMap>
+	<!-- 查询年龄大于N岁的员工 -->
+	<select id="listStaffByAge" resultMap="staffBean">
+		SELECT d.id
+		did,d.department_name departmentName,d.remarks,s.id
+		sid,s.`name`
+		staffName,s.sex staffSex,s.age staffAge
+		from db_department
+		d LEFT JOIN
+		db_staff s ON
+		d.id=s.departmentID 
+		<where>
+			<choose>
+				<when test="age==10">
+					s.age>10
+				</when>
+				<when test="age==20">
+					s.age>20
+				</when>
+				<when test="age==30">
+					s.age>30
+				</when>
+				<when test="age==40">
+					s.age>40
+				</when>
+				<otherwise>
+					s.age>0
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<!-- 查询语句；id对于绑定的Mapper接口中的同名方法，resultType指定查询结果将按该类型封装SQL执行结果 -->
+	<select id="listStaff" resultType="DbStaff">
+		select s.id,s.name,s.sex,s.age
+		from
+		db_staff s  LIMIT #{start},#{count};
+	</select>
+	<!-- 查询语句；获取所有员工记录 -->
+	<select id="getStaffCount"  resultType="int">
+		select COUNT(*) from db_staff
+	</select>
+	<!-- 插入语句 -->
+	<insert id="addStaff">
+		INSERT INTO db_staff
+		VALUES(#{st.id},#{st.name},#{st.sex},#{st.age},#{st.departmentID})
+	</insert>
+	<!-- 更新语句 -->
+	<update id="updateStaff">
+		UPDATE db_staff SET name=#{name} WHERE id=#{id}
+	</update>
+	<!-- 批量更新语句 -->
+	<update id="updateStaffBatch">
+		UPDATE db_staff SET departmentID=#{newDepartmentID} WHERE id
+		<foreach item="i" collection="staffList" open="IN ("
+			separator="," close=");">
+			#{i.id}
+		</foreach>
+	</update>
+	<!-- 删除语句，根据员工ID删除 -->
+	<delete id="deleteStaff">
+		DELETE FROM db_staff WHERE id=#{id}
+	</delete>
+	<!-- 删除语句；根据员工名字 -->
+	<delete id="deleteStaffByName">
+		DELETE FROM db_staff WHERE name=#{staffName}
+	</delete>
+</mapper>

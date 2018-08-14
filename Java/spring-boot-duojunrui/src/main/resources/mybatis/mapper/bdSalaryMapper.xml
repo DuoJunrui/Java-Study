@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 指定对于绑定的Mapper接口 -->
+<mapper namespace = "com.stu.djr.department.mapper.IDbSalaryMapper">
+
+	<!-- 增加（插入）语句 -->
+	<insert id="insertSalary">
+		INSERT INTO db_salary VALUES( #{sal.id}, #{sal.basic_wage}, #{sal.post_wage}, #{sal.merit_pay}
+				 , #{sal.rewards} , #{sal.date} , #{sal.remarks} , #{sal.staffID}  )
+	</insert>
+	
+	<!-- 删除语句，根据工资表ID删除 -->
+	<delete id="deleteSalary">
+		DELETE FROM db_salary WHERE id = #{id}
+	</delete>
+	
+	<!-- 更新语句  根据工资表ID修改绩效工资-->
+	<update id="updateSalary">
+		UPDATE db_salary SET merit_pay=#{merit_pay} WHERE id=#{id}
+	</update>
+	
+	<!-- 查询语句  -->
+	<select id="listSalary" resultType="DbDSalary">
+		SELECT sal.id, sal.basic_wage, sal.post_wage, sal.merit_pay, sal.rewards, 
+			sal.date, sal.remarks, sal.staffID
+		FROM db_salary sal
+	</select>
+
+</mapper>

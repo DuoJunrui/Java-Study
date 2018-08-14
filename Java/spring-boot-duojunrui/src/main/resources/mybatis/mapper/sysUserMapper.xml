@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stu.djr.sysuser.mapper.ISysUserffMapper">
+	
+	<!-- 查询语句；id对于绑定的Mapper接口中的同名方法，resultType指定查询结果将按该类型封装SQL执行结果 -->
+	<select id="listUser" resultType="SysUser" >
+		SELECT u.id,u.userName,u.`password`,u.creatTime,u.staffID FROM sys_user u  LIMIT #{start},#{count};
+	</select>
+	<!-- 查询语句；获取所有用户数量 -->
+	<select id="getUserCount"  resultType="int">
+		SELECT COUNT(*) FROM sys_user
+	</select>
+	<!-- 插入语句 -->
+	<insert id="addUser">
+		INSERT INTO sys_user
+		VALUES(#{id},#{userName},#{password},#{creatTime},#{staffID})
+	</insert>
+	<!-- 更新语句 -->
+	<update id="updateUser">
+		UPDATE sys_user SET password=#{newPassword} WHERE id=#{id}
+	</update>
+	<!-- 删除语句，根据员工ID删除 -->
+	<delete id="deleteUser">
+		DELETE FROM sys_user WHERE id=#{id}
+	</delete>
+	<!-- 查询语句；判断是否存在用户 -->
+	<select id="loginByUserNameAndPassword"  resultType="int">
+		SELECT COUNT(*) FROM sys_user  WHERE userName=#{userName} AND `password`=#{password} 
+	</select>
+	
+</mapper>
