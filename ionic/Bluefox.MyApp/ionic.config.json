@@ -1,0 +1,7 @@
+{
+  "name": "Bluefox.MyApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
