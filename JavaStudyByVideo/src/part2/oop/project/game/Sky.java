@@ -45,5 +45,8 @@ public class Sky extends FlyingObject{
 		g.drawImage(getImage(),x,y1,null);
 	}
 	
+	public boolean outOfBounds() {
+		return false; //永不越界
+	}
 		
 }

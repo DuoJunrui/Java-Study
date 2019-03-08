@@ -24,7 +24,8 @@ public class Hero extends FlyingObject{
 	
 	/** 英雄机随着鼠标移动 x,y:鼠标的x和y坐标*/
 	public void moveTo(int x, int y) {
-		System.out.println("英雄机随着鼠标移动啦!");
+		this.x = x-this.width/2; //英雄机的x=鼠标的x-英雄机宽度的一半
+		this.y = y-this.height/2;
 	}
 	
 	public void step() {}
@@ -60,10 +61,13 @@ public class Hero extends FlyingObject{
 			return bs;
 		} else { //单倍火力值
 			Bullet[] bs = new Bullet[1];
-			bs[0] = new Bullet(this.x+1*xStep, this.y-yStep);
+			bs[0] = new Bullet(this.x+2*xStep, this.y-yStep);
 			return bs;
 		}
-		
+	}
+	
+	public boolean outOfBounds() {
+		return false; //永不越界
 	}
 
 }

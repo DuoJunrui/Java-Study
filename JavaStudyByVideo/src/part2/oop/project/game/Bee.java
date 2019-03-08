@@ -51,4 +51,8 @@ public class Bee extends FlyingObject{
 		return null;
 	}
 	
+	public boolean outOfBounds() {
+		return this.y>=World.HEIGHT; //小蜜蜂的y>=窗口的高，就超出窗口了
+	}
+	
 }

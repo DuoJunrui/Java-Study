@@ -49,5 +49,9 @@ public class Airplane extends FlyingObject{
 		}
 		return null;
 	}
+	
+	public boolean outOfBounds() {
+		return this.y>=World.HEIGHT; //小敌机的y>=窗口的高，就超出窗口了
+	}
 		
 }

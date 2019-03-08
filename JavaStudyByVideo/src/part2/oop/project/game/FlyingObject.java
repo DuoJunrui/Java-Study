@@ -76,4 +76,7 @@ public abstract class FlyingObject {
 		g.drawImage(getImage(),x,y,null);
 	}
 	
+	//检测飞行物是否越界，优化数组存的数据，防止数组存的太多
+	public abstract boolean outOfBounds();
+	
 }

@@ -1,5 +1,4 @@
 package part2.oop.project.game;
-import java.awt.Button;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,6 +6,8 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 /**
  * @author: 多俊睿
  * @data: 2019年3月5日 下午4:06:55
@@ -79,9 +80,26 @@ public class World extends JPanel {  //窗口
 		}
 	}
 	
+	//删除超出窗口的飞行物
+	public void outOfBoundsAction() {
+		
+	}
+	
 	
 	//启动程序的执行
 	public void action() {
+		
+		//侦听器
+		MouseAdapter ma = new MouseAdapter() {
+			//重写mouseMoved()鼠标移动事件
+			public void mouseMoved(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				hero.moveTo(x, y);
+			}
+		};
+		this.addMouseListener(ma);
+		this.addMouseMotionListener(ma);
 		
 		Timer timer = new Timer(); //定时器对象 util.Timer
 		
@@ -94,6 +112,7 @@ public class World extends JPanel {  //窗口
 				enterAction(); //敌人入场（小敌机、大敌机、蜜蜂）
 				shootAction(); //英雄机发射子弹
 				stepAction(); //飞行物移动
+				outOfBoundsAction();
 				repaint(); //重新画，重新调用paint()
 			}
 		}, intervel, intervel); //定时计划
