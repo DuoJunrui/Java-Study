@@ -1,7 +1,6 @@
 package example.part2.tedu.shoot;
 import java.awt.image.BufferedImage;
 
-/** С�л� */
 public class Airplane extends FlyingObject implements Enemy {
 	private static BufferedImage[] images;
 	static{
