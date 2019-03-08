@@ -2,7 +2,7 @@ package part2.oop.project.game;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,7 +48,9 @@ public class World extends JPanel {  //窗口
 	public void enterAction() {
 		enterIndex++;
 		if (enterIndex%40==0) {
-			
+			FlyingObject obj = nextOne(); //获取敌人对象
+			enemies = Arrays.copyOf(enemies, enemies.length+1); //对原数组进行扩容
+			enemies[enemies.length-1] = obj; //将敌人加到最后一个元素上
 		}
 	}
 	
@@ -64,6 +66,7 @@ public class World extends JPanel {  //窗口
 			@Override
 			public void run() { //定时干的事
 				enterAction(); //敌人入场（小敌机、大敌机、蜜蜂）
+				repaint(); //重新画，重新调用paint()
 			}
 		}, intervel, intervel); //定时计划
 	}
