@@ -27,9 +27,13 @@ public class Bee extends FlyingObject{
 		awardType = rand.nextInt(2);
 	}
 	
-	//大敌机移动的速度  step()重写
+	//step()重写
 	public void step(){
-		System.out.println("小蜜蜂的x坐标移动了"+xSpeed+"，y坐标移动了"+ySpeed);
+		x+=xSpeed;
+		y+=ySpeed;
+		if (x<=0 || x>=World.WIDTH-this.width) { //到窗口两边 切换移动方向
+			xSpeed*=-1;
+		}
 	}
 	
 	int deadIndex = 1; //死亡图片爆破下标 爆破初始从1开始

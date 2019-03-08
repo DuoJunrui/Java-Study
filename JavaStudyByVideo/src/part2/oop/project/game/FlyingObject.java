@@ -36,7 +36,7 @@ public abstract class FlyingObject {
 		this.height = height;
 		Random rand = new Random();
 		x = rand.nextInt(World.WIDTH-this.width);
-		y = this.height;
+		y = -this.height;
 	}
 	
 	//飞行物移动  

@@ -24,7 +24,14 @@ public class Sky extends FlyingObject{
 	
 	//背景  step()重写
 	public void step(){
-		System.out.println("天空的y坐标和y1坐标移动了"+speed);
+		y+=speed;
+		y1+=speed;
+		if (y>=World.HEIGHT) {
+			y=-World.HEIGHT;
+		}
+		if (y1>=World.HEIGHT) {
+			y1=-World.HEIGHT;
+		}
 	}
 	
 	//重写获取图片的方法

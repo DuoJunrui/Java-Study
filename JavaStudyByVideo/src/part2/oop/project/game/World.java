@@ -1,4 +1,5 @@
 package part2.oop.project.game;
+import java.awt.Button;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,6 +55,31 @@ public class World extends JPanel {  //窗口
 		}
 	}
 	
+	int shootIndex = 0;
+	/*子弹入场*/
+	public void shootAction() {
+		shootIndex++;
+		if (shootIndex%30==0) {
+			Bullet[] bs = hero.shoot();
+			bullets = Arrays.copyOf(bullets, bullets.length+bs.length);//扩容（bs有几个元素，就扩大几个容量）
+			System.arraycopy(bs, 0, bullets, bullets.length-bs.length, bs.length); //数组的追加
+			System.out.println(bullets.length);
+		}
+	}
+	
+	//飞行物移动
+	public void stepAction() {
+		sky.step();
+		hero.step();
+		for (int i = 0; i < bullets.length; i++) {
+			bullets[i].step();;
+		}
+		for (int i = 0; i < enemies.length; i++) {
+			enemies[i].step();
+		}
+	}
+	
+	
 	//启动程序的执行
 	public void action() {
 		
@@ -66,6 +92,8 @@ public class World extends JPanel {  //窗口
 			@Override
 			public void run() { //定时干的事
 				enterAction(); //敌人入场（小敌机、大敌机、蜜蜂）
+				shootAction(); //英雄机发射子弹
+				stepAction(); //飞行物移动
 				repaint(); //重新画，重新调用paint()
 			}
 		}, intervel, intervel); //定时计划

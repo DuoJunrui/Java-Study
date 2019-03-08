@@ -22,7 +22,7 @@ public class Bullet extends FlyingObject{
 	}
 
 	public void step(){
-		System.out.println("子弹移动了！！！！"+speed);
+		y-=speed; //y- 表示向上移动
 	}
 	
 	//重写获取图片的方法

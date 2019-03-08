@@ -27,9 +27,7 @@ public class Hero extends FlyingObject{
 		System.out.println("英雄机随着鼠标移动啦!");
 	}
 	
-	public void step() {
-		System.out.println("英雄机切换图片啦!");
-	}
+	public void step() {}
 	
 	int index = 0;//初始图片的序号 活着的图片下标
 	//重写获取图片的方法
@@ -48,6 +46,24 @@ public class Hero extends FlyingObject{
 		 */
 		
 		return null;
+	}
+	
+	/*英雄机发射子弹（生成子弹对象）*/
+	public Bullet[] shoot() { //发射子弹
+		int xStep = this.width/4; //英雄机的宽
+		int yStep = 20;
+		if (doubleFire>0) { //双倍火力值
+			Bullet[] bs = new Bullet[2];
+			bs[0] = new Bullet(this.x+1*xStep, this.y-yStep);
+			bs[1] = new Bullet(this.x+3*xStep, this.y-yStep);
+			doubleFire-=2;
+			return bs;
+		} else { //单倍火力值
+			Bullet[] bs = new Bullet[1];
+			bs[0] = new Bullet(this.x+1*xStep, this.y-yStep);
+			return bs;
+		}
+		
 	}
 
 }

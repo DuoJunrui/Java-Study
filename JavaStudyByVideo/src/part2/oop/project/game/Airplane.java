@@ -24,7 +24,7 @@ public class Airplane extends FlyingObject{
 	
 	//小敌机移动的速度  step()重写
 	public void step(){
-		System.out.println("小敌机的y坐标移动了"+speed);
+		y+=speed; //y+（表示向下移动）
 	}
 	
 	int deadIndex = 1; //死亡图片爆破下标 爆破初始从1开始
