@@ -12,7 +12,6 @@ public class Airplane extends FlyingObject implements Enemy {
 	}
 	private int step;
 	
-	/** ���췽�� */
 	public Airplane(){
 		width = 49;
 		height = 36;
