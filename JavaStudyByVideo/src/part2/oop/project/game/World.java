@@ -80,9 +80,30 @@ public class World extends JPanel {  //窗口
 		}
 	}
 	
-	//删除超出窗口的飞行物
+	//删除超出窗口的飞行物   （思路：不越界的留下）
 	public void outOfBoundsAction() {
-		
+		int index = 0; //不越界敌人数组下标  不越界敌人个数
+		FlyingObject[] enemyLives = new FlyingObject[enemies.length];
+		for (int i = 0; i < enemies.length; i++) {
+			FlyingObject f = enemies[i];
+			if (!f.outOfBounds()) { //不越界
+				enemyLives[index] = f; //将不越界敌人添加到不越界敌人数组中
+				index++; //不越界敌人数组下标增一
+			}
+		}
+		enemies = Arrays.copyOf(enemyLives, index); //将不越界敌人的数组复制到新数组中
+	
+		index = 0;
+		FlyingObject[] enemyBullet = new FlyingObject[enemies.length];
+		for (int i = 0; i < enemies.length; i++) {
+			FlyingObject f = enemies[i];
+			if(!f.outOfBounds()) {
+				enemyBullet[index] = f;
+				index++;
+			}
+		}
+	
+	
 	}
 	
 	
