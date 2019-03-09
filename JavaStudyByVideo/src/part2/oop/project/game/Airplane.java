@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
  * @data: 2019年3月5日 下午3:12:41
  * @Description: 小敌机
  */
-//继承超类FlyingObject{}
-public class Airplane extends FlyingObject{
+//继承超类FlyingObject{} (小敌机是敌人也使英雄机能得分)
+public class Airplane extends FlyingObject implements Enemy{
 	private static BufferedImage[] images; //注意，多张图片，建议做成数组形式
 	static {
 		images = new BufferedImage[5];
@@ -52,6 +52,10 @@ public class Airplane extends FlyingObject{
 	
 	public boolean outOfBounds() {
 		return this.y>=World.HEIGHT; //小敌机的y>=窗口的高，就超出窗口了
+	}
+	
+	public int getScore() {
+		return 1;
 	}
 		
 }

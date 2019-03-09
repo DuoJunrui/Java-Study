@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
  * @data: 2019年3月5日 下午3:20:40
  * @Description: 小蜜蜂 得奖励
  */
-public class Bee extends FlyingObject{
+public class Bee extends FlyingObject implements Award{
 	private static BufferedImage[] images;
 	static {
 		images = new BufferedImage[5];
@@ -24,7 +24,7 @@ public class Bee extends FlyingObject{
 		xSpeed = 1;
 		ySpeed = 2;
 		Random rand = new Random();
-		awardType = rand.nextInt(2);
+		awardType = rand.nextInt(2); //0或者1
 	}
 	
 	//step()重写
@@ -53,6 +53,11 @@ public class Bee extends FlyingObject{
 	
 	public boolean outOfBounds() {
 		return this.y>=World.HEIGHT; //小蜜蜂的y>=窗口的高，就超出窗口了
+	}
+	
+	//重写 获取奖励接口的抽象方法
+	public int getAwardType() {
+		return awardType;
 	}
 	
 }

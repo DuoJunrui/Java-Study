@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
  * @data: 2019年3月5日 下午3:16:48
  * @Description: 大敌机
  */
-public class BigAirplane extends FlyingObject {
+public class BigAirplane extends FlyingObject implements Enemy {
 	private static BufferedImage[] images;
 	static {
 		images = new BufferedImage[5];
@@ -45,4 +45,8 @@ public class BigAirplane extends FlyingObject {
 		return this.y>=World.HEIGHT; //小敌机的y>=窗口的高，就超出窗口了
 	}
 	
+	//重写得分
+	public int getScore() {
+		return 3; //打掉大敌机 得3分
+	}
 }

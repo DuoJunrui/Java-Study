@@ -1,7 +1,6 @@
 package part2.oop.day08;
 
 public class InterfaceExercise {
-
 	public static void main(String[] args) {
 		//Inter4 o1 = new Inter4(); //接口不能被实例化
 		Inter4 o2 = new Eoo(); //向上造型
@@ -10,7 +9,6 @@ public class InterfaceExercise {
 		Inter3 o3 = new Eoo(); //向上造型
 		o3.c();
 	}
-
 }
 
 //接口和class类是并列关系
