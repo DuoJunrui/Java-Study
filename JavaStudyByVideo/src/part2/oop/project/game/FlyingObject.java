@@ -79,4 +79,14 @@ public abstract class FlyingObject {
 	//检测飞行物是否越界，优化数组存的数据，防止数组存的太多
 	public abstract boolean outOfBounds();
 	
+	/*物体碰撞算法 this：敌人 ，  other：子弹/英雄机 */
+	public boolean hit(FlyingObject other) {
+		int x1 = this.x-other.width;  //x1:敌人的x - 子弹的宽
+		int x2 = this.x+this.width;   //x2:敌人的x + 敌人的宽
+		int y1 = this.y-other.height; //y1:敌人的y - 子弹的高
+		int y2 = this.y+this.height;  //y2:敌人的y + 敌人的高
+		int x = other.x;  //x:子弹的x
+		int y = other.y;
+		return x>=x1 && x<=x2 && y>=y1 && y<=y2;
+	}
 }
