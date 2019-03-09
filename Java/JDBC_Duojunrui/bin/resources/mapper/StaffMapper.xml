@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 指定对于绑定的Mapper接口 -->
+<mapper namespace = "com.mybatis.mapper.StaffMapper">
+
+	<!-- 增加（插入）语句 -->
+	<insert id="insertStaff">
+		INSERT INTO db_staff VALUES( #{id}, #{name}, #{sex}, #{age}, #{departmentID} )
+	</insert>
+	
+	<!-- 删除语句，根据员工姓名删除员工信息 -->
+	<delete id="deleteStaff">
+		DELETE FROM db_staff WHERE name = #{name}
+	</delete>
+	
+	<!-- 更新语句 -->
+	<update id="updateStaff">
+		UPDATE db_staff SET name=#{name} WHERE id=#{id}
+	</update>
+	
+	<!-- 查询语句  -->
+	<select id="listStaff" resultType="com.mybatis.entity.DBStaff">
+		SELECT s.name, s.sex, s.age FROM db_staff s
+	</select>
+
+</mapper>

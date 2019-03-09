@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 指定对于绑定的Mapper接口 -->
+<mapper namespace = "com.mybatis.mapper.DepartmentMapper">
+
+	<!-- 增加（插入）语句 -->
+	<insert id="insertDepartment">
+		INSERT INTO db_department VALUES( #{id}, #{department_name}, #{remarks} )
+	</insert>
+	
+	<!-- 删除语句，根据部门名称删除部门信息 -->
+	<delete id="deleteDepartment">
+		DELETE FROM db_department WHERE department_name = #{department_name}
+	</delete>
+	
+	<!-- 更新语句 -->
+	<update id="updateDepartment">
+		UPDATE db_department SET department_name=#{department_name} WHERE id=#{id}
+	</update>
+	
+	<!-- 查询语句  -->
+	<select id="listDepartment" resultType="com.mybatis.entity.DBDepartment">
+		SELECT dt.department_name, dt.remarks FROM db_department dt
+	</select>
+
+</mapper>
