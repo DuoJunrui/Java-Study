@@ -102,8 +102,38 @@ public class World extends JPanel {  //窗口
 				index++;
 			}
 		}
+	}
 	
-	
+	int score = 0; //玩家的得分
+	//子弹与敌人碰撞
+	public void bulletBangAction() {
+		for (int i = 0; i < bullets.length; i++) { //遍历所有子弹
+			Bullet b = bullets[i]; //获取每一个子弹
+			for (int j = 0; j < enemies.length; j++) { //遍历所有敌人
+				FlyingObject f = enemies[j]; //获取每一个敌人
+				if (b.isLife() && f.isLife() && f.hit(b)) {
+					b.goDead();
+					f.goDead();
+					
+					if (f instanceof Enemy) {
+						Enemy en = (Enemy)f;
+						score += en.getScore();
+					}
+					if (f instanceof Award) {
+						Award aw = (Award)f;
+						int type = aw.getAwardType();
+						switch (type) {
+						case Award.DOUBLE_FIRE:
+							hero.addDoubleFire();
+							break;
+						case Award.LIFE:
+							hero.addLife();
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	
@@ -134,6 +164,7 @@ public class World extends JPanel {  //窗口
 				shootAction(); //英雄机发射子弹
 				stepAction(); //飞行物移动
 				outOfBoundsAction();
+				bulletBangAction();
 				repaint(); //重新画，重新调用paint()
 			}
 		}, intervel, intervel); //定时计划
@@ -149,6 +180,9 @@ public class World extends JPanel {  //窗口
 		for (int i = 0; i < bullets.length; i++) { //遍历子弹数组
 			bullets[i].paintObject(g);
 		}
+		
+		g.drawString("得分："+score, 10, 25);
+		g.drawString("生命值："+hero.getLife(), 10, 45);
 	}
 	
 	public static void main(String[] args) {

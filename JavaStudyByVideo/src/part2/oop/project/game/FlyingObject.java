@@ -89,4 +89,8 @@ public abstract class FlyingObject {
 		int y = other.y;
 		return x>=x1 && x<=x2 && y>=y1 && y<=y2;
 	}
+	
+	public void goDead() {
+		state = DEAD; //将对象状态修改为死亡状态
+	}
 }

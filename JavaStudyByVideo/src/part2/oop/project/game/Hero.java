@@ -17,7 +17,7 @@ public class Hero extends FlyingObject{
 	private int life; //战斗机的生命值
 	private int doubleFire; //战斗机的火力值
 	public Hero() {
-		super(97, 124, 140, 400);
+		super(97, 124, 150, 400);
 		life = 3;
 		doubleFire = 0;
 	}
@@ -69,5 +69,19 @@ public class Hero extends FlyingObject{
 	public boolean outOfBounds() {
 		return false; //永不越界
 	}
-
+	
+	//增加生命
+	public void addLife() {
+		life++;
+	}
+	
+	//返回英雄级的名
+	public int getLife() {
+		return life;
+	}
+	
+	//增加火力值
+	public void addDoubleFire() {
+		doubleFire+=40;
+	}
 }

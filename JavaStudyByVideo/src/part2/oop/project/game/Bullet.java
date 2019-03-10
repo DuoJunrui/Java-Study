@@ -18,7 +18,7 @@ public class Bullet extends FlyingObject{
 	/*构造方法*/
 	public Bullet(int x,int y) {
 		super(8, 14,x,y);
-		speed = 3;
+		speed = 5;
 	}
 
 	public void step(){
