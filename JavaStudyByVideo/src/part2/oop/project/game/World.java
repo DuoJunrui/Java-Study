@@ -136,6 +136,25 @@ public class World extends JPanel {  //窗口
 		}
 	}
 	
+	//英雄机与敌人碰撞
+	public void heroBangAction() {
+		for (int i = 0; i < enemies.length; i++) {
+			FlyingObject f = enemies[i];
+			if (hero.isLife() && f.isLife() && f.hit(hero)) {
+				f.goDead();
+				hero.subtractLife();
+				hero.clearDoubleFire();
+			}
+		}
+	}
+	
+	public void checkGameOverAction() {
+		if (hero.getLife() <= 0) {  //游戏结束了
+			//切换游戏结束图
+			
+		}
+	}
+	
 	
 	//启动程序的执行
 	public void action() {
@@ -165,6 +184,8 @@ public class World extends JPanel {  //窗口
 				stepAction(); //飞行物移动
 				outOfBoundsAction();
 				bulletBangAction();
+				heroBangAction(); //英雄机遇敌人碰撞
+				checkGameOverAction();//检测游戏结束
 				repaint(); //重新画，重新调用paint()
 			}
 		}, intervel, intervel); //定时计划

@@ -19,7 +19,7 @@ public class Hero extends FlyingObject{
 	public Hero() {
 		super(97, 124, 150, 400);
 		life = 3;
-		doubleFire = 0;
+		doubleFire = 0; //默认单倍火力
 	}
 	
 	/** 英雄机随着鼠标移动 x,y:鼠标的x和y坐标*/
@@ -80,8 +80,18 @@ public class Hero extends FlyingObject{
 		return life;
 	}
 	
+	//英雄机减命
+	public void subtractLife() {
+		life--;
+	}
+	
 	//增加火力值
 	public void addDoubleFire() {
 		doubleFire+=40;
+	}
+	
+	//清空火力值
+	public void clearDoubleFire() {
+		doubleFire = 0;
 	}
 }
