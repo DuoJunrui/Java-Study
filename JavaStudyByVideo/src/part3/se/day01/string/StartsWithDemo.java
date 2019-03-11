@@ -5,7 +5,7 @@ package part3.se.day01.string;
  * @Description: 
 	boolean startstWith(String str)
 	boolean endsWith(String str)
-	排断当前字符串是否以给定的字符开始或者结束
+	判断当前字符串是否以给定的字符开始或者结束
  */
 public class StartsWithDemo {
 
