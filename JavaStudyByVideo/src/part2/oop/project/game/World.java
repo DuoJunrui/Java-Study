@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 /**
  * @author: 多俊睿
  * @data: 2019年3月5日 下午4:06:55
@@ -18,6 +19,20 @@ public class World extends JPanel {  //窗口
 	//常量
 	public static final int WIDTH = 400; //窗口的宽
 	public static final int HEIGHT = 700; //窗口的高
+	public static final int START = 0;
+	public static final int RUNNING = 1;
+	public static final int PAUSE = 2;
+	public static final int GAME_OVER = 3;
+	private int state = START;
+	
+	private static BufferedImage start; //启动图
+	private static BufferedImage pause; //暂停图
+	private static BufferedImage gameover; //游戏结束图
+	static { //初始化静态资源
+		start = FlyingObject.loadImage("start.png");
+		pause = FlyingObject.loadImage("pause.png");
+		gameover = FlyingObject.loadImage("gameover.png");
+	}
 	
 	private Sky sky = new Sky(); //天空对象
 	private Hero hero = new Hero(); //英雄机对象
@@ -60,7 +75,7 @@ public class World extends JPanel {  //窗口
 	/*子弹入场*/
 	public void shootAction() {
 		shootIndex++;
-		if (shootIndex%30==0) {
+		if (shootIndex%20==0) {
 			Bullet[] bs = hero.shoot();
 			bullets = Arrays.copyOf(bullets, bullets.length+bs.length);//扩容（bs有几个元素，就扩大几个容量）
 			System.arraycopy(bs, 0, bullets, bullets.length-bs.length, bs.length); //数组的追加
@@ -151,7 +166,7 @@ public class World extends JPanel {  //窗口
 	public void checkGameOverAction() {
 		if (hero.getLife() <= 0) {  //游戏结束了
 			//切换游戏结束图
-			
+			state = GAME_OVER; 
 		}
 	}
 	
@@ -163,10 +178,42 @@ public class World extends JPanel {  //窗口
 		MouseAdapter ma = new MouseAdapter() {
 			//重写mouseMoved()鼠标移动事件
 			public void mouseMoved(MouseEvent e) {
-				int x = e.getX();
-				int y = e.getY();
-				hero.moveTo(x, y);
+				if (state == RUNNING) {
+					int x = e.getX();
+					int y = e.getY();
+					hero.moveTo(x, y);
+				}
 			}
+			
+			//重写鼠标点击事件
+			public void mouseClicked(MouseEvent e) {
+				switch (state) {
+				case START:
+					state = RUNNING;
+					break;
+				case GAME_OVER:
+					score = 0;
+					sky = new Sky();
+					hero = new Hero();
+					enemies = new FlyingObject[0];
+					bullets = new Bullet[0];
+					state = START;
+					break;
+				}
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				if (state==RUNNING) {
+					state=PAUSE;
+				}
+			}
+			
+			public void mouseEntered(MouseEvent e) {
+				if (state==PAUSE) {
+					state = RUNNING;
+				}
+			}
+			
 		};
 		this.addMouseListener(ma);
 		this.addMouseMotionListener(ma);
@@ -179,13 +226,15 @@ public class World extends JPanel {  //窗口
 			
 			@Override
 			public void run() { //定时干的事
-				enterAction(); //敌人入场（小敌机、大敌机、蜜蜂）
-				shootAction(); //英雄机发射子弹
-				stepAction(); //飞行物移动
-				outOfBoundsAction();
-				bulletBangAction();
-				heroBangAction(); //英雄机遇敌人碰撞
-				checkGameOverAction();//检测游戏结束
+				if (state == RUNNING) {
+					enterAction(); //敌人入场（小敌机、大敌机、蜜蜂）
+					shootAction(); //英雄机发射子弹
+					stepAction(); //飞行物移动
+					outOfBoundsAction();
+					bulletBangAction();
+					heroBangAction(); //英雄机遇敌人碰撞
+					checkGameOverAction();//检测游戏结束
+				}
 				repaint(); //重新画，重新调用paint()
 			}
 		}, intervel, intervel); //定时计划
@@ -202,8 +251,20 @@ public class World extends JPanel {  //窗口
 			bullets[i].paintObject(g);
 		}
 		
-		g.drawString("得分："+score, 10, 25);
-		g.drawString("生命值："+hero.getLife(), 10, 45);
+		g.drawString("得分(SCORE)："+score, 10, 25);
+		g.drawString("生命值(LIFE)："+hero.getLife(), 10, 45);
+		
+		switch (state) {
+		case START:
+			g.drawImage(start, 0, 0, null);
+			break;
+		case PAUSE:
+			g.drawImage(pause, 0, 0, null);
+			break;
+		case GAME_OVER:
+			g.drawImage(gameover, 0, 0, null);
+			break;
+		}
 	}
 	
 	public static void main(String[] args) {
