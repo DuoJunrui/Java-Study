@@ -18,6 +18,9 @@ public class NoteDemo {
 		System.out.println("请开始输入内容：");
 		RandomAccessFile raf = new RandomAccessFile("note.txt", "rw");
 		
+		//将指针移到文件长度末尾
+		raf.seek(raf.length());
+		
 		String line = null;
 		while (true) {
 			line = scan.nextLine();
