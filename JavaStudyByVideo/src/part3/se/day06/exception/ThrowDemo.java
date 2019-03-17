@@ -1,5 +1,7 @@
 package part3.se.day06.exception;
 
+import part3.se.day07.exception.IllegalAgeException;
+
 public class ThrowDemo {
 
 	public static void main(String[] args) {
@@ -14,7 +16,7 @@ public class ThrowDemo {
 			 * 具体如何处理，结合实际业务需求而定
 			 */
 			p.setAge(1000);
-		} catch (Exception e) {
+		} catch (IllegalAgeException e) {
 			e.printStackTrace();
 		}
 		
