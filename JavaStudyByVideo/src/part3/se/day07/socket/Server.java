@@ -42,16 +42,23 @@ public class Server {
 			 * 该方法是一个阻塞方法，调用后进入阻塞，直到一个客户端连接为止，
 			 * 这时该方法会返回一个Socket，通过这个Socket可以与刚建立连接的客户端进行通讯
 			 */
-			System.out.println("等待客户端连接···");
-			//阻塞
-			Socket socket = server.accept();
-			System.out.println("一个客户端连接了！");
+			while (true) {
+				System.out.println("等待客户端连接···");
+				//阻塞
+				Socket socket = server.accept();
+				System.out.println("一个客户端连接了！");
+				
+				//启动一个线程，处理该客户端交互工作
+				ClientHandler handler = new ClientHandler(socket);
+				Thread t = new Thread(handler);
+				t.start();
+			}
 			
-			InputStream in = socket.getInputStream();
-			InputStreamReader isr = new InputStreamReader(in,"UTF-8");
-			BufferedReader br =  new BufferedReader(isr);
-			String message = br.readLine();
-			System.out.println("客户端说：" + message);
+//			InputStream in = socket.getInputStream();
+//			InputStreamReader isr = new InputStreamReader(in,"UTF-8");
+//			BufferedReader br =  new BufferedReader(isr);
+//			String message = br.readLine();
+//			System.out.println("客户端说：" + message);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -60,6 +67,37 @@ public class Server {
 	public static void main(String[] args) {
 		Server server =  new Server();
 		server.start();
+	}
+	
+	//定义内部类  该线程负责处理指定客户端的交互工作
+	private class ClientHandler implements Runnable{
+
+		//当前线程通过这个Socket与对应客户端交互
+		private Socket socket;
+		
+		public ClientHandler(Socket socket) {
+			this.socket = socket;
+		}
+		
+		@Override //重写接口的run方法
+		public void run() {
+			try {
+				System.out.println("启动了一个线程，处理客户端交互！");
+				
+				InputStream in = socket.getInputStream();
+				InputStreamReader isr = new InputStreamReader(in,"UTF-8");
+				BufferedReader br =  new BufferedReader(isr);
+				String message = null;
+				while (true) {
+					message = br.readLine();
+					System.out.println("客户端说：" + message);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
 
 }
