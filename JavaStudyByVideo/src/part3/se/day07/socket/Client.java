@@ -21,6 +21,7 @@ public class Client {
 	 */
 	private Socket socket;
 	
+	
 	public Client() {
 		try {
 			/**
@@ -45,6 +46,11 @@ public class Client {
 	//客户端开始工作的方法
 	public void strat() {
 		try {
+			//先启动读取服务端消息的线程
+			ServerHandler handler = new ServerHandler();
+			Thread t = new Thread(handler);
+			t.start();
+			
 			BufferedReader br = new BufferedReader(
 				new InputStreamReader(System.in) 
 			);
@@ -54,11 +60,21 @@ public class Client {
 			BufferedWriter bs = new BufferedWriter(osw);
 			PrintWriter pw = new PrintWriter(bs,true);
 			
+//			//创建输入流读取服务器消息
+//			BufferedReader in = new BufferedReader(
+//				new InputStreamReader(
+//					socket.getInputStream(),"UTF-8"
+//				)
+//			);
+			
 			System.out.println("开始聊天吧！");
 			String message = null;
 			while (true) {
 				message = br.readLine();
 				pw.println(message);
+				
+//				message = in.readLine();
+//				System.out.println(message);
 			}
 			
 		} catch (IOException e) {
@@ -69,5 +85,33 @@ public class Client {
 	public static void main(String[] args) {
 		Client client = new Client();
 		client.strat();
+	}
+	
+	/**
+	 * @author: 多俊睿
+	 * @data: 2019年3月20日 上午11:16:48
+	 * @Description: 该线程负责读取服务端发送过来的消息
+	 */
+	private class ServerHandler implements Runnable{
+
+		@Override
+		public void run() {
+			try {
+				//创建输入流 读取服务端消息
+				BufferedReader in = new BufferedReader(
+					new InputStreamReader(
+						socket.getInputStream(),"UTF-8"
+					)
+				);
+				String message = null;
+				while ((message = in.readLine()) != null) {
+					System.out.println(message);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
+		
 	}
 }
