@@ -158,7 +158,6 @@ public class Server {
 			} finally {
 				//处理客户端断开连接的操作
 				
-				
 				//将该客户端的输出流从共享数组中删除
 				//将pw从allOut中删除
 				synchronized (allOut) {
