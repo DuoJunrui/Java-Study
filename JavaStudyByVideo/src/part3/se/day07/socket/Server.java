@@ -14,7 +14,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Server {
 	
@@ -32,7 +34,8 @@ public class Server {
 	 * 可以被ClientHandler的实例访问，从而可以用于让所有ClientHandler
 	 * 共享数据使用
 	 */
-	private PrintWriter[] allOut = {};
+	//private PrintWriter[] allOut = {};
+	private List<PrintWriter> allOut = new ArrayList<PrintWriter>();
 	
 	//初始化服务端
 	public Server(){
@@ -117,10 +120,13 @@ public class Server {
 				//防止两个线程同时操作这个数组，给数组对象加一个锁
 				synchronized (allOut) {
 					//1、先扩容allOut
-					allOut = Arrays.copyOf(allOut, allOut.length+1);
-					//2、将当前客户端输出流存入数组最后
-					allOut[allOut.length-1] = pw;
-					System.out.println("当前在线人数：" + allOut.length);
+//					allOut = Arrays.copyOf(allOut, allOut.length+1);
+//					//2、将当前客户端输出流存入数组最后
+//					allOut[allOut.length-1] = pw;
+//					System.out.println("当前在线人数：" + allOut.length);
+					
+					allOut.add(pw);
+					System.out.println();System.out.println("当前在线人数：" + allOut.size());
 				}
 				
 				/**
@@ -139,8 +145,11 @@ public class Server {
 					
 					synchronized (allOut) {
 						//遍历allOut，转发消息
-						for (int i = 0; i < allOut.length; i++) {
-							allOut[i].println("客户端说：" + message);
+//						for (int i = 0; i < allOut.length; i++) {
+//							allOut[i].println("客户端说：" + message);
+//					}
+						for (PrintWriter o : allOut) {
+							o.println("客户端说："+message);
 						}
 					}
 				}
@@ -153,15 +162,16 @@ public class Server {
 				//将该客户端的输出流从共享数组中删除
 				//将pw从allOut中删除
 				synchronized (allOut) {
-					for (int i = 0; i < allOut.length; i++) {
-						if (allOut[i]==pw) {
-							allOut[i] = allOut[allOut.length-1];
-							allOut = Arrays.copyOf(allOut, allOut.length-1);
-							break;
-						}
+//					for (int i = 0; i < allOut.length; i++) {
+//						if (allOut[i]==pw) {
+//							allOut[i] = allOut[allOut.length-1];
+//							allOut = Arrays.copyOf(allOut, allOut.length-1);
+//							break;
+//						}
 					}
+					allOut.remove(pw);
 				}
-				System.out.println("当前在线人数：" + allOut.length);
+				System.out.println("当前在线人数：" + allOut.size());
 				
 				
 				//关闭socket，释放资源
@@ -176,6 +186,5 @@ public class Server {
 			
 		}
 		
-	}
-
 }
+
